@@ -1,10 +1,10 @@
+const dotenv = require( 'dotenv');
 const { UserInputError } = require('apollo-server-errors');
 const  generateToken  = require( '../utils/generate-token');
 const {  upLoadResponse } = require('../utils/cloudinary');
 
 
-const   {  AUTH_TOKEN_EXPIRY,  JWT_SECRET } = require("../config/env.json");
-
+dotenv.config();
 
 const Query = {
 
@@ -173,7 +173,7 @@ const Mutation = {
               }).save();
 
           // Generate user token
-         const    token = generateToken(newUser, JWT_SECRET, AUTH_TOKEN_EXPIRY);
+         const    token = generateToken(newUser, process.env.JWT_SECRET, process.env.AUTH_TOKEN_EXPIRY);
          newUser.token = token;
 
 
