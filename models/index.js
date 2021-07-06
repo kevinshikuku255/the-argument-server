@@ -4,7 +4,6 @@ const User = require("./User");
 
 
 module.exports = {
-     Comment,
      Message,
      User
 };
