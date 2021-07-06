@@ -1,20 +1,20 @@
+const dotenv = require( 'dotenv');
 const  mongoose = require( 'mongoose');
 const express =require('express');
 const { createServer } = require('http');
 const cors =require( "cors");
 
-const   {  DB_URL, PORT } = require("./config/env.json");
 
 const resolvers =  require("./resolvers/index.js");
 const schema = require("./schema");
 const createApolloServer = require("./utils/apollo_server");
-
+dotenv.config();
 
 
 /* ----------Connect to database---------------------------------------------------------------- */
 mongoose.set('useFindAndModify', false);
 mongoose
-  .connect(DB_URL, {
+  .connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -54,7 +54,7 @@ server.installSubscriptionHandlers(httpServer);
 
 
 
-httpServer.listen(PORT, () => {
-  console.log(` 🚀  server ready at http://localhost:${PORT}${server.graphqlPath}`);
-  console.log(` 🚀  Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
+httpServer.listen(process.env.PORT, () => {
+  console.log(` 🚀  server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`);
+  console.log(` 🚀  Subscriptions ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`);
 });
