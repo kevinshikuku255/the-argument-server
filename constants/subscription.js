@@ -1,0 +1,6 @@
+const MESSAGE_CREATED = 'MESSAGE_CREATED';
+
+
+module.exports ={
+ MESSAGE_CREATED
+ }
