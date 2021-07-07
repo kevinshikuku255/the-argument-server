@@ -1,4 +1,4 @@
-const dotenv = require( 'dotenv');
+const dotenv = require('dotenv');
 const  mongoose = require( 'mongoose');
 const express =require('express');
 const { createServer } = require('http');
@@ -52,9 +52,10 @@ server.applyMiddleware({
 const httpServer = createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-
-
-httpServer.listen(process.env.PORT, () => {
-  console.log(` 🚀  server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`);
-  console.log(` 🚀  Subscriptions ready at ws://localhost:${process.env.PORT}${server.subscriptionsPath}`);
+// Listen to HTTP and WebSocket server
+const PORT = process.env.PORT || process.env.API_PORT;
+console.log(PORT)
+httpServer.listen(PORT, () => {
+  console.log(` 🚀  server ready at http://localhost:${PORT}${server.graphqlPath}`);
+  console.log(` 🚀  Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath}`);
 });

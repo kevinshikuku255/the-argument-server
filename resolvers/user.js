@@ -2,8 +2,6 @@ const dotenv = require( 'dotenv');
 const { UserInputError } = require('apollo-server-errors');
 const  generateToken  = require( '../utils/generate-token');
 const {  upLoadResponse } = require('../utils/cloudinary');
-
-
 dotenv.config();
 
 const Query = {
@@ -192,22 +190,27 @@ const Mutation = {
    * Signs in user existing user
    * @param {string} username
    */
-  signin:     async (_, { username }, { User }) => {
+  signin:     async ( _, { username }, { User }) => {
+
   //errror object
   let errors = { };
+  // user input validation
+   if (!username) {    errors.username  =  "invalid username" }
+
   try{
-          const user = await User.findOne().or([ { username } ]);
+          const user = await User.findOne({username});
          //chack if user exists
           if (!user) { errors.user  =  "user doesnt exist" }
 
-          // user input validation
-          if (!username) {    errors.username  =  "invalid username" }
 
           //throw the error object
           if(Object.keys(errors).length > 0) throw  errors;
 
+
           // Generate user token
-         const    token = generateToken(user, JWT_SECRET, AUTH_TOKEN_EXPIRY);
+          const secret = process.env.SECRET;
+          const expiresIn = process.env.TOKEN_EXPIRY;
+         const    token = generateToken(user,   secret,  expiresIn);
          user.token = token
 
          //Return user

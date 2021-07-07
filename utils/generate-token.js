@@ -7,10 +7,10 @@ const  jwt = require('jsonwebtoken');
  * @param {string} secret
  * @param {date} expiresIn
  */
-const  generateToken = (user, secret, expiresIn) => {
+const  generateToken = async (user, secret, expiresIn) => {
   const { id,  username } = user;
-
-  return jwt.sign({ id, username }, secret, { expiresIn });
+ const token =    jwt.sign({ id, username }, secret, { expiresIn});
+  return (token)
 };
 
-module.exports = generateToken
+module.exports = generateToken;
