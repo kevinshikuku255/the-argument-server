@@ -171,7 +171,11 @@ const Mutation = {
               }).save();
 
           // Generate user token
-         const    token = generateToken(newUser, process.env.JWT_SECRET, process.env.AUTH_TOKEN_EXPIRY);
+          // Generate user token
+          const secret = process.env.SECRET;
+          const expiresIn = process.env.TOKEN_EXPIRY;
+         const    token = generateToken(user,   secret,  expiresIn);
+
          newUser.token = token;
 
 
