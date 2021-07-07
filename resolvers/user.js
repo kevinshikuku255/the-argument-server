@@ -174,7 +174,7 @@ const Mutation = {
           // Generate user token
           const secret = process.env.SECRET;
           const expiresIn = process.env.TOKEN_EXPIRY;
-         const    token = generateToken(user,   secret,  expiresIn);
+         const    token = generateToken(newUser,   secret,  expiresIn);
 
          newUser.token = token;
 
