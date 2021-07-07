@@ -143,6 +143,7 @@ const Mutation = {
             //image upload logic
               let imageUrl
               if (image) {
+                console.log(image)
                   const imageResults = await upLoadResponse(image)
                   imageUrl = imageResults.secure_url;
               }
@@ -150,6 +151,7 @@ const Mutation = {
             //Cover image upload logic
               let coverImageUrl
               if (coverImage) {
+                console.log(coverImage)
                   const imageResults = await upLoadResponse(image)
                   covermageUrl = imageResults.secure_url;
               }
