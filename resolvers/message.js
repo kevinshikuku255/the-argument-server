@@ -82,13 +82,13 @@ module.exports =   {
         }).save();
 
       const newMsguser = await User.findById(newMessage.sender)
-
+       console.log(newMessage)
       let   msg = {
-          _id: newMessage._id,
+          _id: newMessage?._id,
           body: newMessage.body,
           sender: newMsguser.username,
           createdAt: newMessage.createdAt,
-        } 
+        }
 
         // Publish the message creation event.
     pubsub.publish(MESSAGE_CREATED, {message: msg})
