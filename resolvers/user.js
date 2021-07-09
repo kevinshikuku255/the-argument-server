@@ -117,7 +117,6 @@ const Mutation = {
         owner,
         manager,
         image,
-        coverImage,
     },
     { User }) => {
     //error object
@@ -125,7 +124,6 @@ const Mutation = {
 
    // wrap this in a try catch block
   // Check if user with given  username already exists
-    try{
             const user = await User.findOne().or([{ username }]);
             //check if uuser exists
             if (user) {
@@ -182,9 +180,6 @@ const Mutation = {
 
          //Return user
           return newUser;
-    }catch(err){
-           throw new UserInputError(`Bad input `, {errors: err})
-    }
   },
 
 
