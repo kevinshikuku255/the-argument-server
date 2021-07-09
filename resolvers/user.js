@@ -149,12 +149,11 @@ const Mutation = {
               }
 
             //Cover image upload logic
-              let coverImageUrl
-              if (coverImage) {
-                console.log(coverImage)
-                  const imageResults = await upLoadResponse(image)
-                  covermageUrl = imageResults.secure_url;
-              }
+              // let coverImageUrl
+              // if (coverImage) {
+              //     const imageResults = await upLoadResponse(image)
+              //     covermageUrl = imageResults.secure_url;
+              // }
 
 
             // save the user to DB

@@ -48,6 +48,7 @@ type messagePayload{
 type User{
    id: ID,
    username: String
+   image:String
     group: Boolean
     description: String
 }
