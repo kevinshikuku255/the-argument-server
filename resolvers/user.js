@@ -117,6 +117,7 @@ const Mutation = {
         owner,
         manager,
         image,
+        coverImage,
     },
     { User }) => {
     //error object
@@ -124,6 +125,7 @@ const Mutation = {
 
    // wrap this in a try catch block
   // Check if user with given  username already exists
+    try{
             const user = await User.findOne().or([{ username }]);
             //check if uuser exists
             if (user) {
@@ -147,11 +149,11 @@ const Mutation = {
               }
 
             //Cover image upload logic
-              // let coverImageUrl
-              // if (coverImage) {
-              //     const imageResults = await upLoadResponse(image)
-              //     covermageUrl = imageResults.secure_url;
-              // }
+              let coverImageUrl
+              if (coverImage) {
+                  const imageResults = await upLoadResponse(image)
+                  covermageUrl = imageResults.secure_url;
+              }
 
 
             // save the user to DB
@@ -180,6 +182,9 @@ const Mutation = {
 
          //Return user
           return newUser;
+    }catch(err){
+           throw new UserInputError(`Bad input `, {errors: err})
+    }
   },
 
 

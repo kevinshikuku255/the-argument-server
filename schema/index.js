@@ -49,6 +49,7 @@ type User{
    id: ID,
    username: String
    image:String
+   coverImage: String
     group: Boolean
     description: String
 }
