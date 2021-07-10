@@ -121,7 +121,7 @@ type messageConnection {
 
     # Signs in user
     signin(
-        username: String!
+        username: String! 
      ): authUserPayload
 
     # Edit user profile

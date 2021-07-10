@@ -143,7 +143,6 @@ const Mutation = {
             //image upload logic
               let imageUrl
               if (image) {
-                console.log(image)
                   const imageResults = await upLoadResponse(image)
                   imageUrl = imageResults.secure_url;
               }
@@ -200,13 +199,13 @@ const Mutation = {
   //errror object
   let errors = { };
   // user input validation
-   if (!username) {    errors.username  =  "invalid username" }
+   if (!username) {    errors.username  =  "invalid username" };
 
   try{
+
           const user = await User.findOne({username});
          //chack if user exists
           if (!user) { errors.user  =  "user doesnt exist" }
-
 
           //throw the error object
           if(Object.keys(errors).length > 0) throw  errors;
@@ -215,8 +214,8 @@ const Mutation = {
           // Generate user token
           const secret = process.env.SECRET;
           const expiresIn = process.env.TOKEN_EXPIRY;
-         const    token = generateToken(user,   secret,  expiresIn);
-         user.token = token
+          const    token = generateToken(user,   secret,  expiresIn);
+          user.token = token;
 
          //Return user
           return user;
