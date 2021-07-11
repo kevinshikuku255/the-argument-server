@@ -30,6 +30,9 @@ module.exports =   {
               .populate({
                 path: "sender"
               })
+              .populate({
+                path: "likes"
+              })
               .limit(limit)
               .sort({ _id: -1 });
 
@@ -81,16 +84,10 @@ module.exports =   {
           sender: authUser.id
         }).save();
 
-      const newMsguser = await User.findById(newMessage.sender)
-      let   msg = {
-          _id: newMessage?._id,
-          body: newMessage.body,
-          sender: newMsguser.username,
-          createdAt: newMessage.createdAt,
-        }
+
 
         // Publish the message creation event.
-    pubsub.publish(MESSAGE_CREATED, {message: msg})
+    pubsub.publish(MESSAGE_CREATED, {message: newMessage})
 
       // find a sender from model and update  message field
           await User.findOneAndUpdate(

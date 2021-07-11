@@ -1,29 +1,4 @@
 const { gql } = require( 'apollo-server-express');
-const message = require("./message");
-const user = require("./user");
-
-
-
-
-
-const schema = gql`
-  type Query {
-    _empty: String
-  }
-
-  type Mutation {
-    _empty: String
-  }
-
-  type Subscription {
-    _empty: String
-  }
-
-${message}
-${user}
-
-`;
-module.exports =  schema;
 
 
 
@@ -31,22 +6,35 @@ module.exports = gql`
 #/* -------------------------------------------------------------------------- */
 # custom types
 type message{
-   _id: ID,
+   id:ID
    body: String!
    sender: String
    receiver: String
    createdAt: String
 }
+type likePayload{
+   id:ID
+   message: message
+   createdAt:String
+}
+
+ type like{
+    id:ID
+   message: String
+   createdAt: String
+ }
+
 type messagePayload{
    id: ID,
    body: String!,
    sender: User
-   receiver: User
+   receiver: String
+   likes: [like]
    createdAt: String
 }
 
 type User{
-   id: ID,
+   id: ID
    username: String
    image:String
    coverImage: String
@@ -55,7 +43,7 @@ type User{
 }
 
 type userPayload{
-   id: ID,
+    id: ID,
     username: String,
     description: String,
     messages: [messagePayload]
@@ -102,6 +90,7 @@ type messageConnection {
 #Mutation types
   type Mutation {
     sendMessage(body: String!  receiver: String): message
+    createLike(messageId: String): like
 
 
 
@@ -119,9 +108,11 @@ type messageConnection {
         coverImage: String
      ): authUserPayload
 
+
+
     # Signs in user
     signin(
-        username: String! 
+        username: String! uuid: String
      ): authUserPayload
 
     # Edit user profile
@@ -137,5 +128,6 @@ type messageConnection {
 #/* -------------------------------------------------------------------------- */
   type Subscription {
      message: message
+     like: like
   }
 `;

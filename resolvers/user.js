@@ -194,18 +194,27 @@ const Mutation = {
    * Signs in user existing user
    * @param {string} username
    */
-  signin:     async ( _, { username }, { User }) => {
+  signin:     async ( _, { username, uuid }, { User, Uuid }) => {
 
   //errror object
   let errors = { };
   // user input validation
    if (!username) {    errors.username  =  "invalid username" };
+  //  if (!uuid) {    errors.uuid  =  "invalid uuid" };
 
   try{
-
           const user = await User.findOne({username});
+
          //chack if user exists
           if (!user) { errors.user  =  "user doesnt exist" }
+
+        const _uuid = await Uuid.findOne({uuid});
+
+        if (!_uuid) {
+          // if that uuid is not prsent create it  and save to DB
+             await new Uuid({ uuid  }).save();
+         };
+
 
           //throw the error object
           if(Object.keys(errors).length > 0) throw  errors;
