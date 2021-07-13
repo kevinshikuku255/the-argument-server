@@ -10,7 +10,10 @@ module.exports =   {
    Query:  {
     getMessage: async(_, { id }, { Message }) => {
         const message = await Message.findById(id)
-          .populate("sender");
+          .populate("sender")
+          .populate({
+                path: "likes"
+              })
           return message
     },
 
@@ -66,7 +69,7 @@ module.exports =   {
         if(!authUser) throw new AuthenticationError("Unauthenticated");
 
       // Check for exitence of message recipient in DB
-      const query = { username: receiver };
+        const query = { username: receiver };
         const recipient = await User.findOne(query);
         if(!recipient){
               throw new UserInputError("User not found")
@@ -85,24 +88,29 @@ module.exports =   {
         }).save();
 
 
-
-        // Publish the message creation event.
-    pubsub.publish(MESSAGE_CREATED, {message: newMessage})
-
       // find a sender from model and update  message field
-          await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
             { _id: authUser.id },
             { $push: { messages: newMessage.id } }
           );
 
+
       // find a receiver from model and update  message field
-          await User.findOneAndUpdate(
+     await User.findOneAndUpdate(
             { _id: recipient.id },
             { $push: { messages: newMessage.id } }
           );
 
+    const message = await Message.findById(newMessage.id )
+             .populate( "sender")
+             .populate("likes");
+
+    // Publish the message creation event.
+    pubsub.publish(MESSAGE_CREATED, {message});
+
+
       // Return  the created message
-        return newMessage;
+        return message;
 
         }catch(err){
           throw new Error(err)

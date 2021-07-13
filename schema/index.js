@@ -19,7 +19,7 @@ type likePayload{
 }
 
  type like{
-    id:ID
+    id: ID
    message: String
    createdAt: String
  }
@@ -89,7 +89,7 @@ type messageConnection {
 #/* -------------------------------------------------------------------------- */
 #Mutation types
   type Mutation {
-    sendMessage(body: String!  receiver: String): message
+    sendMessage(body: String!  receiver: String): messagePayload
     createLike(messageId: String): like
 
 
@@ -127,7 +127,7 @@ type messageConnection {
 
 #/* -------------------------------------------------------------------------- */
   type Subscription {
-     message: message
+     message: messagePayload
      like: like
   }
 `;
